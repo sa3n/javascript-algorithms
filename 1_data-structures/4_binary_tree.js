@@ -1,168 +1,101 @@
 class BinaryTreeNode {
-    constructor (value = null) {
+    constructor(value) {
         this.value = value
-        this.parent = null
         this.leftChild = null
         this.rightChild = null
+        this.parent = null
     }
-
     get isLeaf() {
-        return this.leftChild === null && this.rightChild === null
-    }
-
-    get hasChildren() {
-        return !this.isLeaf
+        return !this.leftChild && !this.rightChild
     }
 }
 
-
 class BinaryTree {
     constructor() {
-        this.root = null
+        // FIXME: use LinkedList only!
+        this.nodes = []
     }
-
-    insert(binaryTreeNode, parentNode) {
-        if (!this.root) return this.root = binaryTreeNode
-        if (!parentNode) throw new Error('Specify parent node!'), null
-        const canInsertLeft = parentNode.leftChild === null 
-        const canInsertRight = parentNode.rightChild === null
-        if (!canInsertLeft && !canInsertRight) throw new Error('Cant insert!'), null
-        if (canInsertLeft) {
-            parentNode.leftChild = binaryTreeNode
-            binaryTreeNode.parent = parentNode
-            return true
+    insert(node) {
+        if (this.root) {
+            let idx = this.nodes.indexOf(null)
+            if (idx === -1) idx = this.nodes.length
+            console.log('idx', idx)
+            const parentIdx = ~~((idx - 1) / 2)
+            node.parent = this.nodes[parentIdx]
+            if (!node.parent.leftChild) {
+                node.parent.leftChild = node
+            } else {
+                node.parent.rightChild = node
+            }
+            this.nodes[idx] = node
+        } else {
+            this.nodes.push(node)
         }
-        if (canInsertRight) {
-            parentNode.rightChild = binaryTreeNode
-            binaryTreeNode.parent = parentNode
-            return true
-        }
     }
-
-    * preorderTraversal(root = this.root) {
-        yield root
-        if (root.leftChild) yield * this.preorderTraversal(root.leftChild)
-        if (root.rightChild) yield * this.preorderTraversal(root.rightChild)
+    *preOrderTraversal(root = this.root) {
+        yield root.value
+        if (root.leftChild) yield *this.preorderTraveral(root.leftChild)
+        if (root.rightChild) yield *this.preorderTraveral(root.rightChild)
     }
-
-    * inorderTraversal(root = this.root) {
-        if (root.leftChild) yield * this.inorderTraversal(root.leftChild)
-        yield root
-        if (root.rightChild) yield * this.inorderTraversal(root.rightChild)
+    *inOrderTraversal(root = this.root) {
+        if (root.leftChild) yield *this.preorderTraveral(root.leftChild)
+        yield root.value
+        if (root.rightChild) yield *this.preorderTraveral(root.rightChild)
     }
-    
-    * postorderTraversal(root = this.root) {
-        if (root.leftChild) yield * this.postorderTraversal(root.leftChild)
-        if (root.rightChild) yield * this.postorderTraversal(root.rightChild)
-        yield root
+    *postOrderTraversal(root = this.root) {
+        if (root.leftChild) yield *this.preorderTraveral(root.leftChild)
+        if (root.rightChild) yield *this.preorderTraveral(root.rightChild)
+        yield root.value
     }
-
-    find(targetValue) {
-        const it = this.preorderTraversal()
-        for (const node of it) {
-            if (node.value === targetValue) {
+    get root() {
+        return this.nodes[0]
+    }
+    find(value) {
+        for (const node of this.nodes) {
+            if (node?.value === value) {
                 return node
             }
         }
         return null
     }
-
     getMax() {
-        let max = this.root.value
-        const it = this.preorderTraversal()
-        for (const node of it) {
-            if (node.value > max) {
-                max = node.value
+        if (!this.nodes.length) return null
+        let maxValue = this.root.value
+        let maxNode = this.root
+        for (const node of this.nodes) {
+            if (node.value > maxValue) {
+                maxValue = node.value
+                maxNode = node
             }
         }
-        return max
+        return maxNode
     }
-
     getMin() {
-        let min = this.root.value
-        const it = this.preorderTraversal()
-        for (const node of it) {
-            if (node.value < min) {
-                min = node.value
+        if (!this.nodes.length) return null
+        let minValue = this.root.value
+        let minNode = this.root
+        for (const node of this.nodes) {
+            if (node.value < minValue) {
+                minValue = node.value
+                minNode = node
             }
         }
-        return min
+        return minNode
     }
-
-    remove(targetValue) {
-        const node = this.find(targetValue)
-        if (node) {
-            if (node.isLeaf()) {
-                // TODO: проверить левый это лист или правый и удалить!
-            }
-            if (!node.leftChild || !node.rightChild) {
-                // TODO: если только один ребёнок, убрать эту вершину как промежуточную
-            }
-            // TODO: если два ребёнка...
+    remove(value) {
+        const node = this.find(value)
+        if (!node) return
+        if (node.isLeaf) {
+            // TODO: no childs
+        }
+        if (node.leftChild && node.rightChild) {
+            // TODO: both childs
+        }
+        if (node.rightChild ^ !node.leftChild) {
+            // TODO: one child
         }
     }
 }
-
-const binaryTree = new BinaryTree()
-const nodeA = new BinaryTreeNode('A')
-const nodeB = new BinaryTreeNode('B')
-const nodeC = new BinaryTreeNode('C')
-const nodeD = new BinaryTreeNode('D')
-const nodeE = new BinaryTreeNode('E')
-const nodeF = new BinaryTreeNode('F')
-const nodeG = new BinaryTreeNode('G')
-const nodeH = new BinaryTreeNode('H')
-const nodeI = new BinaryTreeNode('I')
-const nodeJ = new BinaryTreeNode('J')
-const nodeK = new BinaryTreeNode('K')
-const nodeL = new BinaryTreeNode('L')
-const nodeM = new BinaryTreeNode('M')
-const nodeN = new BinaryTreeNode('N')
-const nodeO = new BinaryTreeNode('O')
-const nodeP = new BinaryTreeNode('P')
-
-binaryTree.insert(nodeA)
-binaryTree.insert(nodeB, nodeA)
-binaryTree.insert(nodeC, nodeB)
-binaryTree.insert(nodeD, nodeC)
-binaryTree.insert(nodeE, nodeC)
-binaryTree.insert(nodeF, nodeB)
-binaryTree.insert(nodeG, nodeF)
-binaryTree.insert(nodeH, nodeG)
-binaryTree.insert(nodeI, nodeA)
-binaryTree.insert(nodeJ, nodeI)
-binaryTree.insert(nodeK, nodeJ)
-binaryTree.insert(nodeL, nodeK)
-binaryTree.insert(nodeM, nodeL)
-binaryTree.insert(nodeN, nodeK)
-binaryTree.insert(nodeO, nodeI)
-binaryTree.insert(nodeP, nodeO)
-
-// console.dir(binaryTree, { depth: Infinity })
-
-
-// const preorderIt = binaryTree.preorderTraversal() // ABCDEFGHIJKLMNOP
-
-// for (const node of preorderIt) {
-//     console.log(node.value)
-// }
-
-// const inorderIt = binaryTree.inorderTraversal() // DCEBHGFAMLNKJIPO
-
-// for (const node of inorderIt) {
-//     console.log(node.value)
-// }
-
-// const postorderIt = binaryTree.postorderTraversal() // DECHGFBMLNKJPOIA
-
-// for (const node of postorderIt) {
-//     console.log(node.value)
-// }
-
-console.dir(binaryTree.find('B'), { depth: 1 })
-
-console.log(binaryTree.getMax())
-console.log(binaryTree.getMin())
 
 module.exports = {
     BinaryTreeNode,

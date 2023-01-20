@@ -10,7 +10,7 @@ class Stack {
 
     pop() {
         const removed = this.top
-        if (this.top !== null) {
+        if (this.top.next) {
             this.top = this.top.next
         }
         return removed
@@ -22,25 +22,13 @@ class Stack {
 }
 
 class StackNode {
-    constructor(value, next = null) {
+    constructor(value) {
         this.value = value
-        this.next = next
+        this.next = null
     }
 }
 
-// value
-// next
-
-const node1 = new StackNode('A')
-const node2 = new StackNode('B')
-const node3 = new StackNode('C')
-const node4 = new StackNode('D')
-const node5 = new StackNode('E')
-
-const stack = new Stack()
-
-stack.push(node1)
-stack.push(node2)
-console.log(stack.pop())
-
-console.dir(stack, { depth: 6 })
+module.exports = {
+    StackNode,
+    Stack
+}

@@ -1,3 +1,3 @@
 # js-algorithms
 
-Алгоритмы на JavaScript
+Алгоритмы и структуры данных на JavaScript
