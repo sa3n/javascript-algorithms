@@ -12,88 +12,137 @@ class BinaryTreeNode {
 
 class BinaryTree {
     constructor() {
-        // FIXME: use LinkedList only!
-        this.nodes = []
-    }
-    insert(node) {
-        if (this.root) {
-            let idx = this.nodes.indexOf(null)
-            if (idx === -1) idx = this.nodes.length
-            console.log('idx', idx)
-            const parentIdx = ~~((idx - 1) / 2)
-            node.parent = this.nodes[parentIdx]
-            if (!node.parent.leftChild) {
-                node.parent.leftChild = node
-            } else {
-                node.parent.rightChild = node
-            }
-            this.nodes[idx] = node
-        } else {
-            this.nodes.push(node)
-        }
+        this.root = null
     }
     *preOrderTraversal(root = this.root) {
-        yield root.value
-        if (root.leftChild) yield *this.preorderTraveral(root.leftChild)
-        if (root.rightChild) yield *this.preorderTraveral(root.rightChild)
+        yield root
+        if (root.leftChild) yield *this.preOrderTraversal(root.leftChild)
+        if (root.rightChild) yield *this.preOrderTraversal(root.rightChild)
     }
     *inOrderTraversal(root = this.root) {
-        if (root.leftChild) yield *this.preorderTraveral(root.leftChild)
-        yield root.value
-        if (root.rightChild) yield *this.preorderTraveral(root.rightChild)
+        if (root.leftChild) yield *this.preOrderTraversal(root.leftChild)
+        yield root
+        if (root.rightChild) yield *this.preOrderTraversal(root.rightChild)
     }
     *postOrderTraversal(root = this.root) {
-        if (root.leftChild) yield *this.preorderTraveral(root.leftChild)
-        if (root.rightChild) yield *this.preorderTraveral(root.rightChild)
-        yield root.value
+        if (root.leftChild) yield *this.preOrderTraversal(root.leftChild)
+        if (root.rightChild) yield *this.preOrderTraversal(root.rightChild)
+        yield root
     }
-    get root() {
-        return this.nodes[0]
+    *BFS(root = this.root) {
+        const queue = [this.root]
+        while (queue.length) {
+            const current = queue.shift()
+            // FIXME: simplify
+            if (current.leftChild) {
+                queue.push(current.leftChild)
+            }
+            if (current.rightChild) {
+                queue.push(current.rightChild)
+            }
+            yield current
+        }
+    }
+    insert(node) {
+        if (!this.root) {
+            this.root = node
+        } else {
+            let it = this.preOrderTraversal()
+            for (const currentNode of it) {
+                // FIXME: simplify
+                if (!currentNode.leftChild) {
+                    currentNode.leftChild = node
+                    node.parent = currentNode
+                    break
+                }
+                if (!currentNode.rightChild) {
+                    currentNode.rightChild = node
+                    node.parent = currentNode
+                    break
+                }
+            }
+        }
     }
     find(value) {
-        for (const node of this.nodes) {
-            if (node?.value === value) {
+        const it = this.preOrderTraversal()
+        for (const node of it) {
+            if (node.value === value) {
                 return node
             }
         }
         return null
     }
     getMax() {
-        if (!this.nodes.length) return null
-        let maxValue = this.root.value
-        let maxNode = this.root
-        for (const node of this.nodes) {
-            if (node.value > maxValue) {
-                maxValue = node.value
-                maxNode = node
+        let max = this.root.value 
+        const it = this.preOrderTraversal()
+        for (const node of it) {
+            if (node.value > max) {
+                max = node.value
             }
         }
-        return maxNode
+        return max
     }
     getMin() {
-        if (!this.nodes.length) return null
-        let minValue = this.root.value
-        let minNode = this.root
-        for (const node of this.nodes) {
-            if (node.value < minValue) {
-                minValue = node.value
-                minNode = node
+        let min = this.root.value 
+        const it = this.preOrderTraversal()
+        for (const node of it) {
+            if (node.value < min) {
+                min = node.value
             }
         }
-        return minNode
+        return min
     }
-    remove(value) {
-        const node = this.find(value)
-        if (!node) return
-        if (node.isLeaf) {
-            // TODO: no childs
+    removeByValue (value) {
+        const nodeToRemove = this.find(value)
+        const rightMostNode = this.rightMostNode
+        if (nodeToRemove === rightMostNode) {
+            this.removeRightMostNode()
+        } else {
+            rightMostNode.parent = nodeToRemove.parent
+
+            // FIXME: simplify
+            if (nodeToRemove.leftChild !== rightMostNode) {
+                rightMostNode.leftChild = nodeToRemove.leftChild
+            }
+            if (nodeToRemove.rightChild !== rightMostNode) {
+                rightMostNode.rightChild = nodeToRemove.rightChild
+            }
+            
+            // FIXME: simplify
+            if (nodeToRemove.parent.leftChild === nodeToRemove) {
+                nodeToRemove.parent.leftChild = rightMostNode
+            }
+            if (nodeToRemove.parent.rightChild === nodeToRemove) {
+                nodeToRemove.parent.rightChild = rightMostNode
+            }
+
+            // FIXME: simplify
+            if (rightMostNode.leftChild) {
+                rightMostNode.leftChild.parent = rightMostNode
+            }
+            if (rightMostNode.rightChild) {
+                rightMostNode.rightChild.parent = rightMostNode
+            }
         }
-        if (node.leftChild && node.rightChild) {
-            // TODO: both childs
+    }
+    removeRightMostNode() {
+        const rightMostNode = this.rightMostNode
+        // FIXME: simplify
+        if (rightMostNode.parent.rightChild === rightMostNode) {
+            rightMostNode.parent.rightChild = null
         }
-        if (node.rightChild ^ !node.leftChild) {
-            // TODO: one child
+        if (rightMostNode.parent.leftChild === rightMostNode) {
+            rightMostNode.parent.leftChild = null
         }
+        return rightMostNode
+    }
+    get rightMostNode() {
+        const it = binaryTree.BFS()
+        let rightMostNode
+        for (const node of it) {
+            rightMostNode = node
+        }
+        return rightMostNode
     }
 }
 
