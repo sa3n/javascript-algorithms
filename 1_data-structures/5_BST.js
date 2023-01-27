@@ -1,4 +1,4 @@
-class Node {
+class BSTNode {
     constructor(value) {
         this.value = value
         this.left = null
@@ -85,26 +85,10 @@ class BST {
         traverse(this.root)
         return data
     }
+    // TODO: remove
 }
 
-const bst = new BST()
-
-bst.root = new Node(10)
-bst.root.left = new Node(5)
-bst.root.right = new Node(13)
-bst.root.left.left = new Node(2)
-bst.root.left.right = new Node(7)
-bst.root.right.right = new Node(16)
-
-//      10
-//  5       13
-// 2 7     - 16
-
-bst.insert(11)
-console.log(bst.find(7))
-console.log(bst.BFS())
-console.log(bst.DFS())
-console.log(bst.DFS('in-order'))
-console.log(bst.DFS('post  -order'))
-
-// console.dir(bst, { depth: 10 })
+module.exports = {
+    BSTNode,
+    BST
+}
