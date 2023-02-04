@@ -1,5 +1,3 @@
-const arr = require('../sample_array.js')
-
 function bubbleSort(arr) {
     for (let round = 0; round < arr.length; round++) {
         let swaps = 0
@@ -15,6 +13,4 @@ function bubbleSort(arr) {
     return arr
 }
 
-console.log(bubbleSort(arr))
-
-// module.exports = bubbleSort
+module.exports = bubbleSort
