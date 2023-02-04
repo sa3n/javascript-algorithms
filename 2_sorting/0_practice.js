@@ -24,8 +24,8 @@ function mergeSort(arr) { return [] }
 
 // 6. Counting Sort
 
-function countingSort(arr) { return [] }
+function countingSort(arr, range) { return [] }
 
 // 7. Radix Sort
 
-function radixSort(arr) { return [] }
+function radixSort(arr, maxLen) { return [] }

@@ -36,7 +36,7 @@ class LinkedList {
     }
 
     update(oldValue, newValue) {
-        const targetNode = this.search(targetValue)
+        const targetNode = this.search(oldValue)
         if (targetNode) {
             targetNode.value = newValue
         }

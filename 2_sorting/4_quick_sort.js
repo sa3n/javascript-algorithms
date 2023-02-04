@@ -1,16 +1,9 @@
-const arr = require('../sample_array')
-
-// pick pivot
-// put all elements smaller than pivot before pivot
-// put all element greater then pivot after pivot
-// O(n log n)
-
 function quickSort(arr) {
-    if (arr.length < 2) return arr
+    if (arr.length <= 1) return arr
     const anchor = arr.pop()
-    const lessThenAnchor = arr.filter(elem => elem < anchor)
-    const moreOrEqualThenAnchor = arr.filter(elem => elem >= anchor)
-    return [...quickSort(lessThenAnchor), anchor, ...quickSort(moreOrEqualThenAnchor)]
+    const ltAnchor = arr.filter(elem => elem < anchor)
+    const gteAnchor = arr.filter(elem => elem >= anchor)
+    return [...quickSort(ltAnchor), anchor, ...quickSort(gteAnchor)]
 }
 
-console.log(quickSort(arr))
+module.exports = quickSort
