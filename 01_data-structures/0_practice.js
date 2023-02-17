@@ -42,25 +42,41 @@ class Queue {}
 
 class BinaryTree {}
 
-// 5. BST (BinarySearchTree) class
+// 5. BST (BinarySearchTree) class on arrays
 // methods:
-//  insert
 //  find
-//  remove
-//  inorder
-//  preorder
-//  postorder
-//  BFS
-//  DFS
+//  getMax
+//  getMin
+//  getParent
+//  getChildren
+//  traverse
+
+// 5. BST (BinarySearchTree) class on linked lists
+// methods:
+//  ...
 
 class BST {}
 
 // 6. Heap class
-// ...
+// methods:
+//  insert
+//  heapifyUp
+//  heapifyDown
+//  getParentIdx
+//  getMin
+//  extractMin
 
 class Heap {}
 
+// 7. PriorityQueue class
+
 class PriorityQueue {}
+
+// 8. Trie (PrefixTree) class
+// methods:
+//  addWord
+//  isWord
+//  printWords
 
 class Trie {}
 

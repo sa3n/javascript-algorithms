@@ -29,3 +29,11 @@ function countingSort(arr, range) { return [] }
 // 7. Radix Sort
 
 function radixSort(arr, maxLen) { return [] }
+
+// 8. Bucket Sort
+
+function radixSort(arr) { return [] }
+
+// 9. Heap Sort
+
+// TODO:

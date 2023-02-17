@@ -3,8 +3,7 @@ function knapSack(bagCapacity, items) {
         .fill(0)
         .map(elem => new Array(bagCapacity + 1));
         
-    for (let itemIdx = 0; itemIdx <= items.length; itemIdx++)
-    {
+    for (let itemIdx = 0; itemIdx <= items.length; itemIdx++) {
         for (let weight = 0; weight <= bagCapacity; weight++) {
             if (itemIdx == 0 || weight == 0) {
                 table[itemIdx][weight] = 0;

@@ -14,16 +14,6 @@ class LinkedList {
         }
     }
 
-    display() {
-        const list = []
-        let current = this.head
-        while (current !== null) {
-            list.push(current)
-            current = current.next
-        }
-        return list
-    }
-
     search(value) {
         let current = this.head
         while(current !== null) {
