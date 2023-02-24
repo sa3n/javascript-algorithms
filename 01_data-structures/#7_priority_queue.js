@@ -1,0 +1,7 @@
+class PriorityQueueNode {
+    
+}
+
+class PriorityQueue {
+
+}
