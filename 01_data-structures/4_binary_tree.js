@@ -8,6 +8,35 @@ class BinaryTreeNode {
     get isLeaf() {
         return !this.leftChild && !this.rightChild
     }
+    get hasFreeChild() {
+        return [this.leftChild, this.rightChild].includes(null)
+    }
+    insert(node) {
+        node.parent = this
+        if (!this.leftChild) {
+            return this.leftChild = node
+        }
+        if (!this.rightChild) {
+            return this.rightChild = node
+        }
+    }
+    get children() {
+        const children = []
+        if (this.leftChild) {
+            children.push(this.leftChild) 
+        }
+        if (this.rightChild) {
+            children.push(this.rightChild) 
+        }
+        return children
+    }
+    detachFromParent() {
+        if (this.parent.rightChild === this) {
+            this.parent.rightChild = null
+        } else {
+            this.parent.leftChild = null
+        }
+    }
 }
 
 class BinaryTree {
@@ -33,13 +62,7 @@ class BinaryTree {
         const queue = [this.root]
         while (queue.length) {
             const current = queue.shift()
-            // FIXME: simplify
-            if (current.leftChild) {
-                queue.push(current.leftChild)
-            }
-            if (current.rightChild) {
-                queue.push(current.rightChild)
-            }
+            queue.push(...current.children)
             yield current
         }
     }
@@ -47,18 +70,10 @@ class BinaryTree {
         if (!this.root) {
             this.root = node
         } else {
-            let it = this.preOrderTraversal()
+            let it = this.BFS()
             for (const currentNode of it) {
-                // FIXME: simplify
-                if (!currentNode.leftChild) {
-                    currentNode.leftChild = node
-                    node.parent = currentNode
-                    break
-                }
-                if (!currentNode.rightChild) {
-                    currentNode.rightChild = node
-                    node.parent = currentNode
-                    break
+                if (currentNode.hasFreeChild) {
+                    return currentNode.insert(node)
                 }
             }
         }
@@ -92,50 +107,6 @@ class BinaryTree {
         }
         return min
     }
-    removeByValue (value) {
-        const nodeToRemove = this.find(value)
-        const rightMostNode = this.rightMostNode
-        if (nodeToRemove === rightMostNode) {
-            this.removeRightMostNode()
-        } else {
-            rightMostNode.parent = nodeToRemove.parent
-
-            // FIXME: simplify
-            if (nodeToRemove.leftChild !== rightMostNode) {
-                rightMostNode.leftChild = nodeToRemove.leftChild
-            }
-            if (nodeToRemove.rightChild !== rightMostNode) {
-                rightMostNode.rightChild = nodeToRemove.rightChild
-            }
-            
-            // FIXME: simplify
-            if (nodeToRemove.parent.leftChild === nodeToRemove) {
-                nodeToRemove.parent.leftChild = rightMostNode
-            }
-            if (nodeToRemove.parent.rightChild === nodeToRemove) {
-                nodeToRemove.parent.rightChild = rightMostNode
-            }
-
-            // FIXME: simplify
-            if (rightMostNode.leftChild) {
-                rightMostNode.leftChild.parent = rightMostNode
-            }
-            if (rightMostNode.rightChild) {
-                rightMostNode.rightChild.parent = rightMostNode
-            }
-        }
-    }
-    removeRightMostNode() {
-        const rightMostNode = this.rightMostNode
-        // FIXME: simplify
-        if (rightMostNode.parent.rightChild === rightMostNode) {
-            rightMostNode.parent.rightChild = null
-        }
-        if (rightMostNode.parent.leftChild === rightMostNode) {
-            rightMostNode.parent.leftChild = null
-        }
-        return rightMostNode
-    }
     get rightMostNode() {
         const it = binaryTree.BFS()
         let rightMostNode
@@ -143,6 +114,31 @@ class BinaryTree {
             rightMostNode = node
         }
         return rightMostNode
+    }
+    removeRightMostNode() {
+        const targetNode = this.rightMostNode
+        targetNode.detachFromParent()
+        return targetNode
+    }
+    removeByValue(value) {
+        const targetNode = this.find(value)
+        if (targetNode.isLeaf) {
+            targetNode.detachFromParent()
+        } else if (targetNode.children.length === 1) {
+            const newParent = targetNode.parent
+            const child = targetNode.leftChild
+            targetNode.detachFromParent()
+            newParent.insert(child)
+        } else {
+            const newParent = targetNode.parent
+            const newNode = this.removeRightMostNode()
+            targetNode.detachFromParent()
+            newNode.leftChild = targetNode.leftChild
+            newNode.leftChild.parent = newNode
+            newNode.rightChild = targetNode.rightChild
+            newNode.rightChild.parent = newNode
+            newParent.insert(newNode)
+        }
     }
 }
 
