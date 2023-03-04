@@ -4,12 +4,16 @@ class Queue {
         this.tail = null
     }
     enqueue(node) {
-        if (this.tail) {
-            this.tail.next = node
-        } else {
+        if (!this.head) {
             this.head = node
         }
-        this.tail = node
+        
+        if (!this.tail) {
+            this.tail = node
+        } else {
+            this.tail.next = node
+            this.tail = node
+        }
     }
     dequeue() {
         const removed = this.top

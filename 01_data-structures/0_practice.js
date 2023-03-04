@@ -5,7 +5,7 @@
 //  insert(node):void, 
 //  delete():void, 
 //  search(value):node, 
-//  update(value):void
+//  update(oldValue, newValue):void
 
 class LinkedList {}
 
