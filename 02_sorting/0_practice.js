@@ -1,4 +1,4 @@
-const arr = require('../sample-data/array')
+const arr = require('../00_sample-data/array')
 
 // IMPLEMENT:
 
