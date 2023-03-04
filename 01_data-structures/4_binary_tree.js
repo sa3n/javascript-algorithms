@@ -9,15 +9,15 @@ class BinaryTreeNode {
         return !this.leftChild && !this.rightChild
     }
     get hasFreeChild() {
-        return [this.leftChild, this.rightChild].includes(null)
+        return !this.leftChild || !this.rightChild
     }
     insert(node) {
+        if (!this.hasFreeChild) return
         node.parent = this
         if (!this.leftChild) {
-            return this.leftChild = node
-        }
-        if (!this.rightChild) {
-            return this.rightChild = node
+            this.leftChild = node
+        } else if (!node.rightChild) {
+            this.rightChild = node
         }
     }
     get children() {
@@ -58,7 +58,7 @@ class BinaryTree {
         if (root.rightChild) yield *this.preOrderTraversal(root.rightChild)
         yield root
     }
-    *BFS(root = this.root) {
+    *BFS() {
         const queue = [this.root]
         while (queue.length) {
             const current = queue.shift()
