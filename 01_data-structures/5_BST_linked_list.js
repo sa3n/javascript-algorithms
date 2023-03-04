@@ -18,15 +18,13 @@ class BST {
             while (true) {
                 if (node.value < current.value) {
                     if (!current.leftChild) {
-                        current.leftChild = node
-                        return
+                        return current.leftChild = node
                     } else {
                         current = current.leftChild
                     }
                 } else {
                     if (!current.rightChild) {
-                        current.rightChild = node
-                        return
+                        return current.rightChild = node
                     } else {
                         current = current.rightChild
                     }
@@ -35,18 +33,16 @@ class BST {
         }
     }
     *BFS() {
-        const queue = []
-        let node = this.root
-        queue.push(this.root)
+        const queue = [this.root]
         while (queue.length) {
-            node = queue.shift()
-            yield node
-            if (node.leftChild) {
-                queue.push(node.leftChild)
+            const current = queue.shift()
+            if (current.leftChild) {
+                queue.push(current.leftChild)
             }
-            if (node.rightChild) {
-                queue.push(node.rightChild)
+            if (current.rightChild) {
+                queue.push(current.rightChild)
             }
+            yield current
         }
     }
     *DFS(node = this.root) {

@@ -1,3 +1,5 @@
+// NOTE: elements in level-order (BFS)
+
 class BST {
     constructor (elements) {
         this.elements = [null, ...elements]

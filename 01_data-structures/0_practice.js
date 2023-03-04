@@ -53,18 +53,14 @@ class BinaryTree {}
 
 // 5. BST (BinarySearchTree) class on linked lists
 // methods:
-//  insert
-//  BFS
-//  DFS
-//  find
-//  getMax
-//  getMin
+//  insert(node):void
+//  BFS():iterator
+//  DFS(root):iterator
+//  find(value):node
+//  getMax():node
+//  getMin():node
 //  getParent
 //  getChildren
-
-class BSTNode {
-    
-}
 
 class BST {}
 
