@@ -49,11 +49,18 @@ class BinaryTree {}
 //  getMin
 //  getParent
 //  getChildren
-//  traverse
+//  traverse (BFS)
 
 // 5. BST (BinarySearchTree) class on linked lists
 // methods:
-//  ...
+//  insert
+//  BFS
+//  DFS
+//  find
+//  getMax
+//  getMin
+//  getParent
+//  getChildren
 
 class BST {}
 
