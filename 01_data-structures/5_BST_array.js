@@ -4,23 +4,31 @@ class BST {
     }
     find(value) {
         let idx = 1
-        while (idx < this.nodes.length) {
-            if (this.nodes[idx] === value) {
+        while (idx < this.elements.length) {
+            if (this.elements[idx] === value) {
                 return idx
-            } else if (this.nodes[idx] === null) {
+            } else if (this.elements[idx] === null) {
                 return -1
-            } else if (this.nodes[idx] > value) {
+            } else if (this.elements[idx] > value) {
                 idx = idx * 2
-            } else if (this.nodes[idx] < value) {
+            } else if (this.elements[idx] < value) {
                 idx = idx * 2 + 1
             }
         }
     }
     getMax () {
-        return this.elements.at(-1)
+        let idx = 1
+        while (this.elements[idx * 2 + 1]) {
+            idx = idx * 2 + 1
+        }
+        return this.elements[idx]
     }
     getMin () {
-        return this.elements[0]
+        let idx = 1
+        while (this.elements[idx * 2]) {
+            idx = idx * 2
+        }
+        return this.elements[idx]
     }
     getParent(idx) {
         if (idx <= 1) return null

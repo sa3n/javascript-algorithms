@@ -62,8 +62,11 @@ class BinaryTree {}
 //  getParent
 //  getChildren
 
-class BST {}
+class BSTNode {
+    
+}
 
+class BST {}
 
 // 6. Heap class
 // methods:
