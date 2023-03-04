@@ -2,19 +2,19 @@ class BST {
     constructor (elements) {
         this.elements = [null, ...elements]
     }
-    find (value) {
-        let leftIdx = 1
-        let rightIdx = this.elements.length
-        while (rightIdx > leftIdx) {
-            const midIdx = ~~((leftIdx + rightIdx) / 2)
-            if (this.elements[midIdx] === value) {
-                return midIdx
-            } 
-            this.elements[midIdx] > value 
-                ? rightIdx = midIdx 
-                : leftIdx = midIdx
+    find(value) {
+        let idx = 1
+        while (idx < this.nodes.length) {
+            if (this.nodes[idx] === value) {
+                return idx
+            } else if (this.nodes[idx] === null) {
+                return -1
+            } else if (this.nodes[idx] > value) {
+                idx = idx * 2
+            } else if (this.nodes[idx] < value) {
+                idx = idx * 2 + 1
+            }
         }
-        return -1
     }
     getMax () {
         return this.elements.at(-1)
@@ -32,11 +32,8 @@ class BST {
         return [leftChild || null, rightChild || null]
     }
     *traverse() {
-        for (const element of this.elements) {
-            if (element === null) {
-                continue
-            }
-            yield element
+        for (const node of this.nodes) {
+            yield node
         }
     }
 }

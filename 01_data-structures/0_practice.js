@@ -44,12 +44,12 @@ class BinaryTree {}
 
 // 5. BST (BinarySearchTree) class on arrays
 // methods:
-//  find
-//  getMax
-//  getMin
-//  getParent
-//  getChildren
-//  traverse (BFS)
+//  find(value):integer (index)
+//  getMax():node
+//  getMin():node
+//  getParent():node
+//  getChildren():[node]
+//  traverse():iterator = BFS
 
 // 5. BST (BinarySearchTree) class on linked lists
 // methods:
@@ -63,6 +63,7 @@ class BinaryTree {}
 //  getChildren
 
 class BST {}
+
 
 // 6. Heap class
 // methods:
