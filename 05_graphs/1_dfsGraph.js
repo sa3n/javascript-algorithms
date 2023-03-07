@@ -1,17 +1,12 @@
-const { adjacencyList2 } = require('../sample-data/graph')
-
-const visited = []
-
-function dfsGraph(adjacencyList, srcVertex) {
-    console.log(srcVertex)
+function DFS(adjacencyList, srcVertex, visited = []) {
     visited.push(srcVertex)
-    for (neighbor in adjacencyList[srcVertex]) {
-        if (!visited.includes(neighbor)) {
-            dfsGraph(adjacencyList, neighbor)
+    const neighborsObj = adjacencyList[srcVertex]
+    for (const vertex in neighborsObj) {
+        if (!visited.includes(vertex)) {
+            DFS(adjacencyList, vertex, visited)
         }
     }
+    return visited
 }
 
-dfsGraph(adjacencyList2, 'A')
-
-// ! проверить на других графах!
+module.exports = DFS

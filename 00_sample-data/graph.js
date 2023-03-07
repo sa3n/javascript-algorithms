@@ -31,7 +31,6 @@ const adjacencyMatrix = [
 module.exports = {
     edgeList,
     adjacencyList,
-    adjacencyList2,
     adjacencyMatrix
 }
 
@@ -43,5 +42,5 @@ module.exports = {
 // |       _|   |       _|   |
 // |     _|     |     _|     |
 // |   _|       |   _|       |
-// V _|         |  |         V
+// V _/         V  |         V
 // C ---------> E <|         F
