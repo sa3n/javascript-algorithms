@@ -1,13 +1,10 @@
-const tree = require('../sample-data/tree')
-
-function bfsTree(treeNode) {
-    const queue = [treeNode]
-
-    while (queue.length) {
+function * BFS(root) {
+    const queue = [root]
+    while (queue.length > 0) {
         const current = queue.shift()
-        console.log(current.value)
+        yield current
         queue.push(...current.children)
     }
 }
 
-bfsTree(tree.root)
+module.exports = BFS

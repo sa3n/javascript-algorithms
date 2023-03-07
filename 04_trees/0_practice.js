@@ -8,4 +8,4 @@ function * DFS(root) {}
 
 // 2. BFS
 
-function BFS(root) {}
+function * BFS(root) {}
