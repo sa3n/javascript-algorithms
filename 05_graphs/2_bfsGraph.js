@@ -1,27 +1,16 @@
-const { adjacencyList2 } = require('../sample-data/graph')
-
-const queue = []
-const visited = []
-// const result = []
-
-function bfsGraph(adjacencyList, srcVertex) {
-    queue.push(srcVertex)
-    visited.push(srcVertex)
+function BFS(adjacencyList, srcVertex) {
+    const queue = [srcVertex]
+    const visited = [srcVertex]
     while (queue.length > 0) {
-        const currentVertex = queue.shift()
-        console.log(currentVertex)
-        // result.push([])
-        for (neighbor in adjacencyList[currentVertex]) {
-            if (!visited.includes(neighbor)) {
-                queue.push(neighbor)
-                visited.push(neighbor)
-                // result[result.length - 1].push(neighbor)
+        const current = queue.shift()
+        for (const vertex in adjacencyList[current]) {
+            if (!visited.includes(vertex)) {
+                queue.push(vertex)
+                visited.push(vertex)
             }
         }
     }
-    // console.log(result)
+    return visited
 }
 
-// result — пример распределения по уровням. Но требует доработки
-
-bfsGraph(adjacencyList2, 'A')
+module.exports = BFS

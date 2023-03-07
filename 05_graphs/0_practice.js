@@ -8,3 +8,4 @@ function DFS(adjacencyList, srcVertex, visited = []) {}
 
 // BFS
 
+function BFS(adjacencyList, srcVertex) {}
