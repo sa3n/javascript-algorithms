@@ -1,4 +1,4 @@
-const tree = require('../sample-data/tree')
+const tree = require('../00_sample-data/tree')
 
 function dfsTree(treeNode) {
     console.log(treeNode.value)
