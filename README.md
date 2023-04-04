@@ -55,6 +55,7 @@
 
 # Searching
 * Binary Search
+* Kadane (Maximum subarray problem)
 
 # Math
 * Sieve of Eratosphenes
