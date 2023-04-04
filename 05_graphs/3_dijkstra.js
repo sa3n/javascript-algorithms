@@ -10,18 +10,16 @@ function dijkstra(adjacencyList, from) {
     while (priorityQueue.length) {
         priorityQueue.sort((a, b) => a.distance - b.distance)
         const current = priorityQueue.shift()
-        const u = current.vertex
-        for (v in adjacencyList[u]) {
-            const distance = adjacencyList[u][v]
-            if (distances[v] > distances[u] + distance) {
-                distances[v] = distances[u] + distance
+        const u = current.vertex        // u = FROM
+        for (v in adjacencyList[u]) {   // v = TO
+            const distanceUV = adjacencyList[u][v]
+            if (distances[v] > distances[u] + distanceUV) {
+                distances[v] = distances[u] + distanceUV
                 priorityQueue.push({ vertex: v, distance: distances[v] })
             }
         }
     }
-    console.log(distances)
+    return distances
 }
-
-dijkstra(undirectedAdjacencyList, 'A')
 
 module.exports = dijkstra
