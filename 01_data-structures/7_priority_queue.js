@@ -11,7 +11,6 @@ class PriorityQueue {
     }
     enqueue(node) {
         for (let i = 0; i < this.nodes.length; i++) {
-            console.log(this.nodes.length, i)
             if (node.priority > this.nodes[i].priority) {
                 this.nodes.splice(i, 0, node)
                 return

@@ -1,3 +1,9 @@
+// * В левом поддереве вершины со значением X
+// * находятся вершины со значением < X
+// * в правом поддереве — со значением > X
+// * Минимальное значение — в крайней левой вершине
+// * максимальное — в крайней правой
+
 class BSTNode {
     constructor(value) {
         this.value = value
@@ -30,7 +36,7 @@ class BST {
                     }
                 }
             }
-        }
+        }// * максимальное — в крайней правой
     }
     *BFS() {
         const queue = [this.root]
@@ -87,6 +93,7 @@ class BST {
             }
         }
     }
+    // FIXME: move getParents() and getChildren() to BSTNode methods (getters)
     getParent(value) {
         let current = this.root
         while (current) {

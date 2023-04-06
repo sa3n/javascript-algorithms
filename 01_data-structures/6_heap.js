@@ -1,5 +1,11 @@
+// * Родитель больше всех своих потомков (maxHeap)
+// * ... или наоброт — меньше (minHeap)
+// * Кто из потомков больше/меньше — гарантии нет
+// * Максимальное/минимальное значение — в корне
+
 class MinHeap {
     constructor() {
+        // FIXME: add null (simplify parent/children searching)
         this.elements = []
     }
     insert(element) {
