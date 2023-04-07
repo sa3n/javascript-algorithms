@@ -9,3 +9,7 @@ function DFS(adjacencyList, srcVertex, visited = []) {}
 // BFS
 
 function BFS(adjacencyList, srcVertex) {}
+
+// Dijkstra
+
+function dijkstra(adjacencyList, from) {}
